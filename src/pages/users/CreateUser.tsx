@@ -8,7 +8,7 @@ export const CreateUser: React.FC = () => {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [tempPassword, setTempPassword] = useState('');
-  
+
   const [createdUser, setCreatedUser] = useState<{ id: string; email: string } | null>(null);
   const [copied, setCopied] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -80,9 +80,9 @@ export const CreateUser: React.FC = () => {
         </Link>
         <div>
           <h1 className="text-2xl font-bold text-white flex items-center gap-2">
-            <UserPlus className="w-6 h-6 text-sky-400" /> Provision Staff App Account
+            <UserPlus className="w-6 h-6 text-sky-400" /> Provision App Account
           </h1>
-          <p className="text-xs text-slate-400">Create new staff account with temporary password</p>
+          <p className="text-xs text-slate-400">Create new account with temporary password</p>
         </div>
       </div>
 
@@ -96,7 +96,7 @@ export const CreateUser: React.FC = () => {
       {createdUser ? (
         <div className="glass-panel p-6 rounded-3xl border border-slate-800 space-y-5">
           <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-sm">
-            <h3 className="font-bold text-base text-white">Staff Account Created Successfully!</h3>
+            <h3 className="font-bold text-base text-white">Account Created Successfully!</h3>
             <p className="mt-1">
               Account created for <span className="font-semibold text-white">{fullName}</span> ({email}).
             </p>
@@ -115,7 +115,7 @@ export const CreateUser: React.FC = () => {
               </button>
             </div>
             <p className="text-[11px] text-slate-500">
-              Provide this temporary password directly to the staff member.
+              Provide this temporary password directly to the member.
             </p>
           </div>
 
@@ -131,7 +131,7 @@ export const CreateUser: React.FC = () => {
       ) : (
         <form onSubmit={handleCreateUser} className="glass-panel p-6 rounded-3xl border border-slate-800 space-y-5">
           <div>
-            <label className="block text-xs font-semibold uppercase text-slate-300 mb-2">Staff Full Name *</label>
+            <label className="block text-xs font-semibold uppercase text-slate-300 mb-2">User Full Name *</label>
             <input
               type="text"
               required
@@ -143,13 +143,13 @@ export const CreateUser: React.FC = () => {
           </div>
 
           <div>
-            <label className="block text-xs font-semibold uppercase text-slate-300 mb-2">Staff Email Address *</label>
+            <label className="block text-xs font-semibold uppercase text-slate-300 mb-2">User Email Address *</label>
             <input
               type="email"
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="staff@kalari.com"
+              placeholder="user@kalari.com"
               className="w-full px-4 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-white text-sm focus:outline-none focus:border-sky-500"
             />
           </div>

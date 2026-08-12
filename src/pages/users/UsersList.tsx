@@ -28,10 +28,10 @@ export const UsersList: React.FC = () => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 glass-panel p-6 rounded-3xl border border-slate-800">
         <div>
           <h1 className="text-2xl font-bold text-white flex items-center gap-2">
-            <Users className="w-6 h-6 text-sky-400" /> Staff App Users
+            <Users className="w-6 h-6 text-sky-400" /> App Users
           </h1>
           <p className="text-sm text-slate-400 mt-1">
-            Staff members with access to issue or manage martial arts weapons.
+            Other members with access to issue or manage martial arts weapons.
           </p>
         </div>
         {can('user_management', 'manage') && (
@@ -46,10 +46,10 @@ export const UsersList: React.FC = () => {
 
       {/* Users Table */}
       {isLoading ? (
-        <div className="text-center py-12 text-slate-500 text-sm">Loading staff users...</div>
+        <div className="text-center py-12 text-slate-500 text-sm">Loading other users...</div>
       ) : profiles.length === 0 ? (
         <div className="glass-panel p-12 rounded-3xl text-center border border-slate-800">
-          <p className="text-slate-400">No staff profiles found.</p>
+          <p className="text-slate-400">No other profiles found.</p>
         </div>
       ) : (
         <div className="glass-panel rounded-3xl border border-slate-800 overflow-hidden">
@@ -57,7 +57,7 @@ export const UsersList: React.FC = () => {
             <table className="w-full text-left text-sm text-slate-300">
               <thead className="text-xs font-semibold text-slate-400 uppercase bg-slate-900/80 border-b border-slate-800">
                 <tr>
-                  <th className="p-4">Staff Member</th>
+                  <th className="p-4">User</th>
                   <th className="p-4">Role / Access</th>
                   <th className="p-4">Status</th>
                   <th className="p-4">Created Date</th>
@@ -74,7 +74,7 @@ export const UsersList: React.FC = () => {
                           <Shield className="w-3 h-3" /> Super Admin
                         </span>
                       ) : (
-                        <span className="text-xs text-slate-400 font-medium">Standard Staff</span>
+                        <span className="text-xs text-slate-400 font-medium">Standard User</span>
                       )}
                     </td>
                     <td className="p-4">
