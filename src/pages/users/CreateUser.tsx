@@ -137,7 +137,7 @@ export const CreateUser: React.FC = () => {
               required
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
-              placeholder='e.g., "Sensei Sarah"'
+              placeholder='e.g., "Gurukkal Ramesh"'
               className="w-full px-4 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-white text-sm focus:outline-none focus:border-sky-500"
             />
           </div>
@@ -149,7 +149,7 @@ export const CreateUser: React.FC = () => {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="sarah@dojo.com"
+              placeholder="staff@kalari.com"
               className="w-full px-4 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-white text-sm focus:outline-none focus:border-sky-500"
             />
           </div>

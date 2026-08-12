@@ -94,8 +94,8 @@ export const AppLayout: React.FC<{ children?: React.ReactNode }> = ({ children }
               <Sword className="w-6 h-6" />
             </div>
             <div>
-              <h1 className="font-bold text-white tracking-wide text-sm">WEAPONS CONTROL</h1>
-              <p className="text-[11px] text-slate-400">Martial Arts Inventory</p>
+              <h1 className="font-bold text-white tracking-wide text-sm">KALARI WEAPONS</h1>
+              <p className="text-[11px] text-slate-400">Kalaripayattu Arsenal</p>
             </div>
           </div>
 
@@ -158,7 +158,6 @@ export const AppLayout: React.FC<{ children?: React.ReactNode }> = ({ children }
         {/* Mobile Top Header (Menu icon on the left corner) */}
         <header className="md:hidden flex items-center justify-between p-4 glass-panel border-b border-slate-800 sticky top-0 z-30">
           <div className="flex items-center gap-3">
-            {/* Hamburger menu button on top left corner */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="p-2 text-slate-300 hover:bg-slate-800 rounded-lg transition-colors"
@@ -169,7 +168,7 @@ export const AppLayout: React.FC<{ children?: React.ReactNode }> = ({ children }
 
             <div className="flex items-center gap-2">
               <Sword className="w-5 h-5 text-sky-400" />
-              <span className="font-bold text-sm text-white tracking-wide">Weapons Control</span>
+              <span className="font-bold text-sm text-white tracking-wide">Kalari Weapons</span>
             </div>
           </div>
 
@@ -188,19 +187,17 @@ export const AppLayout: React.FC<{ children?: React.ReactNode }> = ({ children }
         {/* Mobile Drawer Overlay with Empty Space Click to Close */}
         {mobileMenuOpen && (
           <div className="md:hidden fixed inset-0 z-40 bg-slate-950/80 backdrop-blur-sm animate-in fade-in duration-200">
-            {/* Empty space backdrop - clicking closes the menu */}
             <div
               className="absolute inset-0"
               onClick={() => setMobileMenuOpen(false)}
             />
 
-            {/* Left slide-out drawer */}
             <div className="relative w-4/5 max-w-xs h-full bg-slate-900 border-r border-slate-800 p-6 flex flex-col justify-between shadow-2xl z-10 animate-in slide-in-from-left duration-200">
               <div className="space-y-6">
                 <div className="flex items-center justify-between pb-4 border-b border-slate-800">
                   <div className="flex items-center gap-2">
                     <Sword className="w-5 h-5 text-sky-400" />
-                    <span className="font-bold text-sm text-white">Weapons Control</span>
+                    <span className="font-bold text-sm text-white">Kalari Weapons</span>
                   </div>
                   <button
                     onClick={() => setMobileMenuOpen(false)}

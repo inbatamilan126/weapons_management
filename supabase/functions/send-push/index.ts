@@ -17,12 +17,22 @@ serve(async (req) => {
     const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "";
     const vapidPublicKey = Deno.env.get("VAPID_PUBLIC_KEY") ?? "BEEahOKscIhnVsZ2i6TKSIUK1Qb4uxd4Uaama7gXZi9BA64YMTjxEGSOUowqMgNAUOduKuLGkL3fmGLcAt4A89k";
     const vapidPrivateKey = Deno.env.get("VAPID_PRIVATE_KEY") ?? "bTGtRKjTn0O2U-FQtDTbKFMLZ30ohQGIxngrUkel8bM";
-    const vapidSubject = Deno.env.get("VAPID_SUBJECT") ?? "mailto:admin@dojo.com";
+    const vapidSubject = Deno.env.get("VAPID_SUBJECT") ?? "mailto:gurukkal@kalari.com";
 
     webpush.setVapidDetails(vapidSubject, vapidPublicKey, vapidPrivateKey);
 
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
-    const { user_id, title, body, url } = await req.json();
+    const bodyText = await req.text();
+    let bodyJson: any = {};
+    if (bodyText) {
+      try {
+        bodyJson = JSON.parse(bodyText);
+      } catch (e) {
+        bodyJson = {};
+      }
+    }
+
+    const { user_id, title, body, url } = bodyJson;
 
     let query = supabase.from("push_subscriptions").select("*");
     if (user_id) {
@@ -33,8 +43,8 @@ serve(async (req) => {
     if (fetchErr) throw fetchErr;
 
     const payload = JSON.stringify({
-      title: title || "Weapons Management Alert",
-      body: body || "You have a new notification.",
+      title: title || "Kalaripayattu Weapons Alert ⚔️",
+      body: body || "You have a new Kalari notification.",
       url: url || "/notifications",
       icon: "/pwa-192x192.png",
       badge: "/icon.svg",
@@ -55,8 +65,8 @@ serve(async (req) => {
 
     return new Response(
       JSON.stringify({
-        message: "Push notifications processed",
-        total: subscriptions?.length || 0,
+        message: "Push notifications delivered",
+        total_devices: subscriptions?.length || 0,
         results: sendResults,
       }),
       {

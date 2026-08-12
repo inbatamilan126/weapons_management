@@ -33,8 +33,8 @@ export const Login: React.FC = () => {
           <div className="p-4 bg-sky-500/10 text-sky-400 rounded-2xl border border-sky-500/20 mb-4 shadow-lg shadow-sky-500/10">
             <Sword className="w-10 h-10" />
           </div>
-          <h1 className="text-2xl font-bold text-white tracking-wide">WEAPONS CONTROL</h1>
-          <p className="text-sm text-slate-400 mt-1">Martial Arts Inventory & Issue Tracking</p>
+          <h1 className="text-2xl font-bold text-white tracking-wide">KALARI WEAPONS</h1>
+          <p className="text-sm text-slate-400 mt-1">Kalaripayattu Inventory & Issue Tracking</p>
         </div>
 
         {error && (
@@ -56,7 +56,7 @@ export const Login: React.FC = () => {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="staff@dojo.com"
+                placeholder="staff@kalari.com"
                 className="w-full pl-11 pr-4 py-3 bg-slate-900/80 border border-slate-800 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-sky-500 transition-colors"
               />
             </div>

@@ -69,9 +69,9 @@ export const Dashboard: React.FC = () => {
       {/* Header Banner */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 glass-panel p-6 rounded-3xl border border-slate-800">
         <div>
-          <h1 className="text-2xl font-bold text-white tracking-tight">Dojo Weapons Control</h1>
+          <h1 className="text-2xl font-bold text-white tracking-tight">Kalari Weapons Control</h1>
           <p className="text-sm text-slate-400 mt-1">
-            Real-time status overview of weapon inventory and student checkouts.
+            Real-time status overview of Kalaripayattu weapons inventory and student checkouts.
           </p>
         </div>
         <div className="flex items-center gap-3">
@@ -100,7 +100,7 @@ export const Dashboard: React.FC = () => {
 
         <div className="glass-panel p-5 rounded-2xl border border-slate-800 flex items-center justify-between">
           <div>
-            <p className="text-xs font-semibold uppercase text-slate-400">Available Stock</p>
+            <p className="text-xs font-semibold uppercase text-slate-400">Available Arsenal</p>
             <p className="text-3xl font-bold text-emerald-400 mt-1">{stats.availableWeapons}</p>
           </div>
           <div className="p-3 bg-emerald-500/10 text-emerald-400 rounded-xl">
@@ -110,7 +110,7 @@ export const Dashboard: React.FC = () => {
 
         <div className="glass-panel p-5 rounded-2xl border border-slate-800 flex items-center justify-between">
           <div>
-            <p className="text-xs font-semibold uppercase text-slate-400">Currently Checked Out</p>
+            <p className="text-xs font-semibold uppercase text-slate-400">Currently Issued</p>
             <p className="text-3xl font-bold text-purple-400 mt-1">{stats.issuedWeapons}</p>
           </div>
           <div className="p-3 bg-purple-500/10 text-purple-400 rounded-xl">

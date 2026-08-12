@@ -34,7 +34,7 @@ const MODULES: ModuleConfig[] = [
   {
     key: 'issue_notifications',
     label: 'All Due Notifications',
-    description: 'View due-soon and overdue reminders for ALL issues across the entire dojo (not just personal).',
+    description: 'View due-soon and overdue reminders for ALL issues across the entire kalari (not just personal).',
     hasManage: false,
   },
 ];
@@ -124,7 +124,6 @@ export const UserPermissions: React.FC = () => {
     setSuccess(false);
 
     try {
-      // Upsert rows into user_permissions for each module
       const rowsToUpsert = MODULES.map((m) => ({
         user_id: id,
         module: m.key,

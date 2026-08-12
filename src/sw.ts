@@ -13,8 +13,8 @@ clientsClaim();
 // Custom Push Notification Handler
 self.addEventListener('push', (event) => {
   let data = {
-    title: 'Martial Arts Weapons Alert',
-    body: 'You have an active notification.',
+    title: 'Kalaripayattu Weapons Alert ⚔️',
+    body: 'You have an active Kalari notification.',
     url: '/notifications',
     icon: '/pwa-192x192.png',
     badge: '/icon.svg',

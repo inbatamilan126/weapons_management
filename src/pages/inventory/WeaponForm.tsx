@@ -165,7 +165,7 @@ export const WeaponForm: React.FC = () => {
             {isEditing ? 'Edit Weapon Model' : 'Add Weapon Stock'}
           </h1>
           <p className="text-xs text-slate-400">
-            {isEditing ? 'Update bulk stock details' : 'Register new weapon type or bulk inventory'}
+            {isEditing ? 'Update bulk stock details' : 'Register new Kalaripayattu weapon or bulk inventory'}
           </p>
         </div>
       </div>
@@ -186,7 +186,7 @@ export const WeaponForm: React.FC = () => {
               required
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder='e.g., "Wooden Bo Staff" or "Metal Sai Pair"'
+              placeholder='e.g., "Kettuvari (Long Staff)" or "Urumi (Flexible Sword)"'
               className="w-full px-4 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-white text-sm focus:outline-none focus:border-sky-500"
             />
           </div>
@@ -198,7 +198,7 @@ export const WeaponForm: React.FC = () => {
               required
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              placeholder='e.g., "Bo Staff", "Sai", "Katana"'
+              placeholder='e.g., "Kettuvari", "Urumi", "Cheruvadi", "Val & Parichay"'
               className="w-full px-4 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-white text-sm focus:outline-none focus:border-sky-500"
             />
           </div>
@@ -237,7 +237,7 @@ export const WeaponForm: React.FC = () => {
               type="text"
               value={serialOrTag}
               onChange={(e) => setSerialOrTag(e.target.value)}
-              placeholder='e.g., "LOT-2026-STAFFS"'
+              placeholder='e.g., "LOT-2026-KETTU"'
               className="w-full px-4 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-white text-sm focus:outline-none focus:border-sky-500"
             />
           </div>
@@ -287,7 +287,7 @@ export const WeaponForm: React.FC = () => {
             rows={3}
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
-            placeholder="Storage racks, wood quality, or maintenance notes..."
+            placeholder="Kalari rack location, oil treatment status, or wood quality notes..."
             className="w-full px-4 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-white text-sm focus:outline-none focus:border-sky-500"
           />
         </div>

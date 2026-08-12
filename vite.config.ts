@@ -12,9 +12,9 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'icon.svg'],
       manifest: {
-        name: 'Martial Arts Weapons Management',
-        short_name: 'WeaponsApp',
-        description: 'Track weapons inventory, student checkouts, conditions, and return reminders.',
+        name: 'Kalaripayattu Weapons Management',
+        short_name: 'KalariWeapons',
+        description: 'Track Kalaripayattu weapons inventory, student checkouts, conditions, and return reminders.',
         theme_color: '#0f172a',
         background_color: '#0f172a',
         display: 'standalone',

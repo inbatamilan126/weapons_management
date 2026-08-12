@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Download, WifiOff, X, RefreshCw } from 'lucide-react';
+import { Download, WifiOff, X } from 'lucide-react';
 
 export const PWAInstallBanner: React.FC = () => {
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
@@ -43,7 +43,7 @@ export const PWAInstallBanner: React.FC = () => {
       {isOffline && (
         <div className="bg-amber-500 text-slate-950 px-4 py-2 text-xs font-bold flex items-center justify-center gap-2 shadow-md">
           <WifiOff className="w-4 h-4 shrink-0" />
-          <span>You are currently working offline. Cached inventory and issue records remain available.</span>
+          <span>You are currently working offline. Cached Kalari weapons inventory and issue records remain available.</span>
         </div>
       )}
 
@@ -56,7 +56,7 @@ export const PWAInstallBanner: React.FC = () => {
             </div>
 
             <div className="flex-1">
-              <h4 className="text-sm font-bold text-white">Install Dojo Weapons App</h4>
+              <h4 className="text-sm font-bold text-white">Install Kalari Weapons App</h4>
               <p className="text-xs text-slate-400 mt-0.5">
                 Add to your home screen for quick offline access and instant push alerts.
               </p>
