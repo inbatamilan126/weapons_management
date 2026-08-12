@@ -1,9 +1,9 @@
 import { supabase } from '../lib/supabase';
 
-// Valid 65-byte uncompressed P-256 VAPID Public Key
+// Standard 65-byte P-256 VAPID Public Key
 const PUBLIC_VAPID_KEY =
   import.meta.env.VITE_VAPID_PUBLIC_KEY ||
-  'BLvoRndoj1mNTN0qIk5R32VrE7akE9kbXttKVgvGf0mZLnKOruURI903UQevKsHdYAvhEJVaeQMiGs1wPzKgE9c';
+  'BEEahOKscIhnVsZ2i6TKSIUK1Qb4uxd4Uaama7gXZi9BA64YMTjxEGSOUowqMgNAUOduKuLGkL3fmGLcAt4A89k';
 
 function urlBase64ToUint8Array(base64String: string): Uint8Array {
   const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
@@ -33,14 +33,17 @@ export async function checkPushSubscriptionStatus(): Promise<PushStatus> {
     return { supported: true, permission, isSubscribed: false };
   }
 
-  const registration = await navigator.serviceWorker.ready;
-  const subscription = await registration.pushManager.getSubscription();
-
-  return {
-    supported: true,
-    permission,
-    isSubscribed: Boolean(subscription),
-  };
+  try {
+    const registration = await navigator.serviceWorker.ready;
+    const subscription = await registration.pushManager.getSubscription();
+    return {
+      supported: true,
+      permission,
+      isSubscribed: Boolean(subscription),
+    };
+  } catch (err) {
+    return { supported: true, permission, isSubscribed: false };
+  }
 }
 
 export async function subscribeToPushNotifications(userId: string): Promise<boolean> {
@@ -54,14 +57,31 @@ export async function subscribeToPushNotifications(userId: string): Promise<bool
   }
 
   const registration = await navigator.serviceWorker.ready;
-  let subscription = await registration.pushManager.getSubscription();
 
-  if (!subscription) {
+  // Unsubscribe any stale/previous subscription to clear push service state
+  try {
+    const existingSub = await registration.pushManager.getSubscription();
+    if (existingSub) {
+      await existingSub.unsubscribe();
+    }
+  } catch (e) {
+    console.warn('Cleared old push subscription:', e);
+  }
+
+  let subscription: PushSubscription;
+  try {
     const convertedKey = urlBase64ToUint8Array(PUBLIC_VAPID_KEY);
     subscription = await registration.pushManager.subscribe({
       userVisibleOnly: true,
       applicationServerKey: convertedKey,
     });
+  } catch (err: any) {
+    if (err.name === 'AbortError' || err.message?.includes('push service error')) {
+      throw new Error(
+        'Push Service Registration Failed: If using Brave browser, enable "Use Google Services for Push Messaging" in brave://settings/privacy. Otherwise, ensure network connection to Google FCM is active.'
+      );
+    }
+    throw err;
   }
 
   const subJson = subscription.toJSON();
@@ -70,7 +90,7 @@ export async function subscribeToPushNotifications(userId: string): Promise<bool
   const auth = subJson.keys?.auth;
 
   if (!endpoint || !p256dh || !auth) {
-    throw new Error('Failed to generate valid Web Push subscription keys.');
+    throw new Error('Failed to extract valid Web Push keys.');
   }
 
   const { error } = await supabase.from('push_subscriptions').upsert(
