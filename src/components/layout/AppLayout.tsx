@@ -68,7 +68,7 @@ export const AppLayout: React.FC<{ children?: React.ReactNode }> = ({ children }
       show: can('issue_management', 'view'),
     },
     {
-      label: 'Staff Users',
+      label: 'Users',
       path: '/users',
       icon: Users,
       show: can('user_management', 'view'),
