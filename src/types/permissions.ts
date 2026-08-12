@@ -108,7 +108,7 @@ export interface Notification {
   id: string;
   user_id: string;
   weapon_issue_id?: string | null;
-  type: 'due_soon' | 'overdue';
+  type: 'due_soon' | 'due_today' | 'overdue';
   message: string;
   is_read: boolean;
   created_at: string;

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Bell, CheckCheck, AlertTriangle, Clock, Smartphone, ShieldCheck, AlertCircle } from 'lucide-react';
+import { Bell, CheckCheck, AlertTriangle, Clock, CalendarCheck, Smartphone, AlertCircle } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../context/AuthContext';
 import { Notification } from '../../types/permissions';
@@ -114,10 +114,10 @@ export const NotificationsList: React.FC = () => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 glass-panel p-6 rounded-3xl border border-slate-800">
         <div>
           <h1 className="text-2xl font-bold text-white flex items-center gap-2">
-            <Bell className="w-6 h-6 text-sky-400" /> Reminders & Web Push
+            <Bell className="w-6 h-6 text-sky-400" /> Reminders & Daily Alerts
           </h1>
           <p className="text-sm text-slate-400 mt-1">
-            Automated alerts for due-soon checkouts and overdue return reminders.
+            Automated 9:00 AM alerts for due-today, due-soon, and daily overdue weapons.
           </p>
         </div>
 
@@ -140,12 +140,12 @@ export const NotificationsList: React.FC = () => {
               Device Web Push Notifications
               {pushStatus.isSubscribed && (
                 <span className="text-[10px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded-full font-bold">
-                  ACTIVE
+                  ACTIVE (9:00 AM DAILY)
                 </span>
               )}
             </h3>
             <p className="text-xs text-slate-400 mt-0.5">
-              Receive instant OS push alerts on your phone or desktop when weapons are due or overdue.
+              Receive instant 9 AM OS push alerts on your phone or desktop for due & overdue weapons.
             </p>
             {pushError && (
               <p className="text-xs text-rose-400 mt-1 flex items-center gap-1">
@@ -168,7 +168,7 @@ export const NotificationsList: React.FC = () => {
             ? 'Processing...'
             : pushStatus.isSubscribed
             ? 'Disable Push on Device'
-            : 'Enable Push Notifications'}
+            : 'Enable 9 AM Push Alerts'}
         </button>
       </div>
 
@@ -205,49 +205,58 @@ export const NotificationsList: React.FC = () => {
         </div>
       ) : (
         <div className="space-y-3">
-          {filteredNotifications.map((n) => (
-            <div
-              key={n.id}
-              className={`p-4 rounded-2xl border transition-all flex items-start justify-between gap-4 ${
-                !n.is_read
-                  ? 'glass-panel border-sky-500/30 bg-sky-500/5 shadow-lg shadow-sky-500/5'
-                  : 'glass-card border-slate-800 opacity-70'
-              }`}
-            >
-              <div className="flex items-start gap-3">
-                <div
-                  className={`p-2.5 rounded-xl shrink-0 ${
-                    n.type === 'overdue'
-                      ? 'bg-rose-500/10 text-rose-400 border border-rose-500/20'
-                      : 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
-                  }`}
-                >
-                  {n.type === 'overdue' ? (
-                    <AlertTriangle className="w-5 h-5" />
-                  ) : (
-                    <Clock className="w-5 h-5" />
-                  )}
+          {filteredNotifications.map((n) => {
+            const isOverdue = n.type === 'overdue';
+            const isDueToday = n.type === 'due_today';
+
+            return (
+              <div
+                key={n.id}
+                className={`p-4 rounded-2xl border transition-all flex items-start justify-between gap-4 ${
+                  !n.is_read
+                    ? 'glass-panel border-sky-500/30 bg-sky-500/5 shadow-lg shadow-sky-500/5'
+                    : 'glass-card border-slate-800 opacity-70'
+                }`}
+              >
+                <div className="flex items-start gap-3">
+                  <div
+                    className={`p-2.5 rounded-xl shrink-0 ${
+                      isOverdue
+                        ? 'bg-rose-500/10 text-rose-400 border border-rose-500/20'
+                        : isDueToday
+                        ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
+                        : 'bg-sky-500/10 text-sky-400 border border-sky-500/20'
+                    }`}
+                  >
+                    {isOverdue ? (
+                      <AlertTriangle className="w-5 h-5" />
+                    ) : isDueToday ? (
+                      <CalendarCheck className="w-5 h-5" />
+                    ) : (
+                      <Clock className="w-5 h-5" />
+                    )}
+                  </div>
+
+                  <div>
+                    <p className="text-sm font-medium text-white">{n.message}</p>
+                    <span className="text-[11px] text-slate-500 mt-1 block">
+                      {new Date(n.created_at).toLocaleString()}
+                    </span>
+                  </div>
                 </div>
 
-                <div>
-                  <p className="text-sm font-medium text-white">{n.message}</p>
-                  <span className="text-[11px] text-slate-500 mt-1 block">
-                    {new Date(n.created_at).toLocaleString()}
-                  </span>
-                </div>
+                {!n.is_read && (
+                  <button
+                    onClick={() => handleMarkAsRead(n.id)}
+                    className="p-1.5 text-slate-400 hover:text-sky-400 hover:bg-slate-800 rounded-lg transition-colors shrink-0"
+                    title="Mark as Read"
+                  >
+                    <CheckCheck className="w-4 h-4" />
+                  </button>
+                )}
               </div>
-
-              {!n.is_read && (
-                <button
-                  onClick={() => handleMarkAsRead(n.id)}
-                  className="p-1.5 text-slate-400 hover:text-sky-400 hover:bg-slate-800 rounded-lg transition-colors shrink-0"
-                  title="Mark as Read"
-                >
-                  <CheckCheck className="w-4 h-4" />
-                </button>
-              )}
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
     </div>
