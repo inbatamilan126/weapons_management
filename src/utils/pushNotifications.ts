@@ -1,9 +1,9 @@
 import { supabase } from '../lib/supabase';
 
-// Standard VAPID Public Key for Web Push encryption
+// Valid 65-byte uncompressed P-256 VAPID Public Key
 const PUBLIC_VAPID_KEY =
   import.meta.env.VITE_VAPID_PUBLIC_KEY ||
-  'BEl62iUYgUivxIkv69yViEuiBIa40yY2z91R3KzX4-zX3Qy7O0n1-zX3Qy7O0n1';
+  'BLvoRndoj1mNTN0qIk5R32VrE7akE9kbXttKVgvGf0mZLnKOruURI903UQevKsHdYAvhEJVaeQMiGs1wPzKgE9c';
 
 function urlBase64ToUint8Array(base64String: string): Uint8Array {
   const padding = '='.repeat((4 - (base64String.length % 4)) % 4);

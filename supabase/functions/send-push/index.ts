@@ -15,8 +15,8 @@ serve(async (req) => {
   try {
     const supabaseUrl = Deno.env.get("SUPABASE_URL") ?? "";
     const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "";
-    const vapidPublicKey = Deno.env.get("VAPID_PUBLIC_KEY") ?? "BEl62iUYgUivxIkv69yViEuiBIa40yY2z91R3KzX4-zX3Qy7O0n1-zX3Qy7O0n1";
-    const vapidPrivateKey = Deno.env.get("VAPID_PRIVATE_KEY") ?? "sample_vapid_private_key_dojo_weapons";
+    const vapidPublicKey = Deno.env.get("VAPID_PUBLIC_KEY") ?? "BLvoRndoj1mNTN0qIk5R32VrE7akE9kbXttKVgvGf0mZLnKOruURI903UQevKsHdYAvhEJVaeQMiGs1wPzKgE9c";
+    const vapidPrivateKey = Deno.env.get("VAPID_PRIVATE_KEY") ?? "I2TufB8opEPQXtub0zU_PCursgZhtSF1exiYdNQCOb8";
     const vapidSubject = Deno.env.get("VAPID_SUBJECT") ?? "mailto:admin@dojo.com";
 
     webpush.setVapidDetails(vapidSubject, vapidPublicKey, vapidPrivateKey);
