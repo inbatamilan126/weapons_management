@@ -10,7 +10,7 @@ export default defineConfig({
       srcDir: 'src',
       filename: 'sw.ts',
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'icon.svg'],
+      includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'pwa-192x192.png', 'pwa-512x512.png'],
       manifest: {
         name: 'Kalaripayattu Weapons Management',
         short_name: 'KalariWeapons',
@@ -25,6 +25,7 @@ export default defineConfig({
             src: '/pwa-192x192.png',
             sizes: '192x192',
             type: 'image/png',
+            purpose: 'any',
           },
           {
             src: '/pwa-512x512.png',
