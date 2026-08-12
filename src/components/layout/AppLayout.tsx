@@ -155,12 +155,24 @@ export const AppLayout: React.FC<{ children?: React.ReactNode }> = ({ children }
           </div>
         </aside>
 
-        {/* Mobile Top Header */}
+        {/* Mobile Top Header (Menu icon on the left corner) */}
         <header className="md:hidden flex items-center justify-between p-4 glass-panel border-b border-slate-800 sticky top-0 z-30">
-          <div className="flex items-center gap-2">
-            <Sword className="w-5 h-5 text-sky-400" />
-            <span className="font-bold text-sm text-white">Weapons Control</span>
+          <div className="flex items-center gap-3">
+            {/* Hamburger menu button on top left corner */}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="p-2 text-slate-300 hover:bg-slate-800 rounded-lg transition-colors"
+              aria-label="Toggle menu"
+            >
+              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+
+            <div className="flex items-center gap-2">
+              <Sword className="w-5 h-5 text-sky-400" />
+              <span className="font-bold text-sm text-white tracking-wide">Weapons Control</span>
+            </div>
           </div>
+
           <div className="flex items-center gap-3">
             {unreadCount > 0 && (
               <Link to="/notifications" className="relative p-1.5 text-slate-300">
@@ -170,53 +182,77 @@ export const AppLayout: React.FC<{ children?: React.ReactNode }> = ({ children }
                 </span>
               </Link>
             )}
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 text-slate-300 hover:bg-slate-800 rounded-lg"
-            >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
           </div>
         </header>
 
-        {/* Mobile Menu Drawer */}
+        {/* Mobile Drawer Overlay with Empty Space Click to Close */}
         {mobileMenuOpen && (
-          <div className="md:hidden fixed inset-0 z-40 bg-slate-950/95 p-6 pt-20 flex flex-col justify-between">
-            <nav className="space-y-2">
-              {navItems
-                .filter((item) => item.show)
-                .map((item) => {
-                  const Icon = item.icon;
-                  return (
-                    <Link
-                      key={item.path}
-                      to={item.path}
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="flex items-center justify-between p-3 rounded-xl text-base font-medium text-slate-200 hover:bg-slate-800"
-                    >
-                      <div className="flex items-center gap-3">
-                        <Icon className="w-5 h-5 text-sky-400" />
-                        <span>{item.label}</span>
-                      </div>
-                      {item.badge && (
-                        <span className="px-2 py-0.5 text-xs font-bold bg-rose-500 text-white rounded-full">
-                          {item.badge}
-                        </span>
-                      )}
-                    </Link>
-                  );
-                })}
-            </nav>
-            <div className="pt-4 border-t border-slate-800">
-              <button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  signOut().then(() => navigate('/login'));
-                }}
-                className="w-full flex items-center justify-center gap-2 p-3 bg-rose-500/10 text-rose-400 rounded-xl font-medium"
-              >
-                <LogOut className="w-5 h-5" /> Sign Out ({profile?.full_name})
-              </button>
+          <div className="md:hidden fixed inset-0 z-40 bg-slate-950/80 backdrop-blur-sm animate-in fade-in duration-200">
+            {/* Empty space backdrop - clicking closes the menu */}
+            <div
+              className="absolute inset-0"
+              onClick={() => setMobileMenuOpen(false)}
+            />
+
+            {/* Left slide-out drawer */}
+            <div className="relative w-4/5 max-w-xs h-full bg-slate-900 border-r border-slate-800 p-6 flex flex-col justify-between shadow-2xl z-10 animate-in slide-in-from-left duration-200">
+              <div className="space-y-6">
+                <div className="flex items-center justify-between pb-4 border-b border-slate-800">
+                  <div className="flex items-center gap-2">
+                    <Sword className="w-5 h-5 text-sky-400" />
+                    <span className="font-bold text-sm text-white">Weapons Control</span>
+                  </div>
+                  <button
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="p-1.5 text-slate-400 hover:text-white rounded-lg"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
+
+                <nav className="space-y-1.5">
+                  {navItems
+                    .filter((item) => item.show)
+                    .map((item) => {
+                      const Icon = item.icon;
+                      const isActive = location.pathname === item.path;
+                      return (
+                        <Link
+                          key={item.path}
+                          to={item.path}
+                          onClick={() => setMobileMenuOpen(false)}
+                          className={`flex items-center justify-between p-3 rounded-xl text-sm font-medium transition-all ${
+                            isActive
+                              ? 'bg-sky-500/15 text-sky-400 border border-sky-500/30'
+                              : 'text-slate-300 hover:bg-slate-800'
+                          }`}
+                        >
+                          <div className="flex items-center gap-3">
+                            <Icon className={`w-4 h-4 ${isActive ? 'text-sky-400' : 'text-slate-400'}`} />
+                            <span>{item.label}</span>
+                          </div>
+                          {item.badge && (
+                            <span className="px-2 py-0.5 text-xs font-bold bg-rose-500 text-white rounded-full">
+                              {item.badge}
+                            </span>
+                          )}
+                        </Link>
+                      );
+                    })}
+                </nav>
+              </div>
+
+              <div className="pt-4 border-t border-slate-800">
+                <button
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    signOut().then(() => navigate('/login'));
+                  }}
+                  className="w-full flex items-center justify-center gap-2 p-3 bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 rounded-xl font-medium text-sm transition-colors"
+                >
+                  <LogOut className="w-4 h-4" /> Sign Out ({profile?.full_name})
+                </button>
+              </div>
             </div>
           </div>
         )}
