@@ -90,8 +90,8 @@ export const AppLayout: React.FC<{ children?: React.ReactNode }> = ({ children }
         {/* Sidebar for Desktop */}
         <aside className="hidden md:flex flex-col w-64 glass-panel border-r border-slate-800 p-4 sticky top-0 h-screen z-20">
           <div className="flex items-center gap-3 px-2 py-4 mb-6 border-b border-slate-800">
-            <div className="p-2 bg-sky-500/10 text-sky-400 rounded-xl border border-sky-500/20">
-              <Sword className="w-6 h-6" />
+            <div className="p-1.5 bg-slate-900/80 rounded-xl border border-slate-800 shrink-0">
+              <img src="/pwa-192x192.png" alt="Kalari Logo" className="w-8 h-8 object-contain" />
             </div>
             <div>
               <h1 className="font-bold text-white tracking-wide text-sm">KALARI WEAPONS</h1>
@@ -167,7 +167,7 @@ export const AppLayout: React.FC<{ children?: React.ReactNode }> = ({ children }
             </button>
 
             <div className="flex items-center gap-2">
-              <Sword className="w-5 h-5 text-sky-400" />
+              <img src="/pwa-192x192.png" alt="Kalari Logo" className="w-6 h-6 object-contain" />
               <span className="font-bold text-sm text-white tracking-wide">Kalari Weapons</span>
             </div>
           </div>
@@ -196,7 +196,7 @@ export const AppLayout: React.FC<{ children?: React.ReactNode }> = ({ children }
               <div className="space-y-6">
                 <div className="flex items-center justify-between pb-4 border-b border-slate-800">
                   <div className="flex items-center gap-2">
-                    <Sword className="w-5 h-5 text-sky-400" />
+                    <img src="/pwa-192x192.png" alt="Kalari Logo" className="w-6 h-6 object-contain" />
                     <span className="font-bold text-sm text-white">Kalari Weapons</span>
                   </div>
                   <button

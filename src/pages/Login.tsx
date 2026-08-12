@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Sword, Lock, Mail, AlertCircle } from 'lucide-react';
+import { Lock, Mail, AlertCircle } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 
 export const Login: React.FC = () => {
@@ -30,9 +30,11 @@ export const Login: React.FC = () => {
     <div className="min-h-screen bg-slate-950 flex items-center justify-center p-4">
       <div className="w-full max-w-md glass-panel rounded-3xl p-8 border border-slate-800 shadow-2xl">
         <div className="flex flex-col items-center text-center mb-8">
-          <div className="p-4 bg-sky-500/10 text-sky-400 rounded-2xl border border-sky-500/20 mb-4 shadow-lg shadow-sky-500/10">
-            <Sword className="w-10 h-10" />
-          </div>
+          <img
+            src="/pwa-512x512.png"
+            alt="Kalari Logo"
+            className="w-16 h-16 object-contain mb-3 drop-shadow-xl"
+          />
           <h1 className="text-2xl font-bold text-white tracking-wide">KALARI WEAPONS</h1>
           <p className="text-sm text-slate-400 mt-1">Kalaripayattu Inventory & Issue Tracking</p>
         </div>
