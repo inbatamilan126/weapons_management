@@ -1,16 +1,39 @@
 import React, { useEffect, useState } from 'react';
-import { Bell, CheckCheck, AlertTriangle, Clock } from 'lucide-react';
+import { Bell, CheckCheck, AlertTriangle, Clock, Smartphone, ShieldCheck, AlertCircle } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
+import { useAuth } from '../../context/AuthContext';
 import { Notification } from '../../types/permissions';
+import {
+  checkPushSubscriptionStatus,
+  subscribeToPushNotifications,
+  unsubscribeFromPushNotifications,
+  PushStatus,
+} from '../../utils/pushNotifications';
 
 export const NotificationsList: React.FC = () => {
+  const { user } = useAuth();
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [filter, setFilter] = useState<'all' | 'unread'>('all');
   const [isLoading, setIsLoading] = useState(true);
 
+  // Web Push State
+  const [pushStatus, setPushStatus] = useState<PushStatus>({
+    supported: false,
+    permission: 'default',
+    isSubscribed: false,
+  });
+  const [isPushToggling, setIsPushToggling] = useState(false);
+  const [pushError, setPushError] = useState<string | null>(null);
+
   useEffect(() => {
     fetchNotifications();
+    checkPushStatus();
   }, []);
+
+  const checkPushStatus = async () => {
+    const status = await checkPushSubscriptionStatus();
+    setPushStatus(status);
+  };
 
   const fetchNotifications = async () => {
     try {
@@ -25,6 +48,25 @@ export const NotificationsList: React.FC = () => {
       console.error('Error fetching notifications:', err);
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleTogglePush = async () => {
+    if (!user) return;
+    setIsPushToggling(true);
+    setPushError(null);
+
+    try {
+      if (pushStatus.isSubscribed) {
+        await unsubscribeFromPushNotifications(user.id);
+      } else {
+        await subscribeToPushNotifications(user.id);
+      }
+      await checkPushStatus();
+    } catch (err: any) {
+      setPushError(err.message || 'Error configuring push notifications on this device.');
+    } finally {
+      setIsPushToggling(false);
     }
   };
 
@@ -72,7 +114,7 @@ export const NotificationsList: React.FC = () => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 glass-panel p-6 rounded-3xl border border-slate-800">
         <div>
           <h1 className="text-2xl font-bold text-white flex items-center gap-2">
-            <Bell className="w-6 h-6 text-sky-400" /> Reminders & Notifications
+            <Bell className="w-6 h-6 text-sky-400" /> Reminders & Web Push
           </h1>
           <p className="text-sm text-slate-400 mt-1">
             Automated alerts for due-soon checkouts and overdue return reminders.
@@ -84,6 +126,49 @@ export const NotificationsList: React.FC = () => {
           className="flex items-center gap-2 px-4 py-2 bg-slate-900 hover:bg-slate-800 text-sky-400 text-xs font-semibold rounded-xl border border-slate-800 transition-colors"
         >
           <CheckCheck className="w-4 h-4" /> Mark All as Read
+        </button>
+      </div>
+
+      {/* Web Push Device Settings Panel */}
+      <div className="glass-panel p-5 rounded-3xl border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="flex items-start gap-3">
+          <div className="p-3 bg-sky-500/10 text-sky-400 rounded-2xl border border-sky-500/20 shrink-0">
+            <Smartphone className="w-6 h-6" />
+          </div>
+          <div>
+            <h3 className="font-bold text-white text-sm flex items-center gap-2">
+              Device Web Push Notifications
+              {pushStatus.isSubscribed && (
+                <span className="text-[10px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded-full font-bold">
+                  ACTIVE
+                </span>
+              )}
+            </h3>
+            <p className="text-xs text-slate-400 mt-0.5">
+              Receive instant OS push alerts on your phone or desktop when weapons are due or overdue.
+            </p>
+            {pushError && (
+              <p className="text-xs text-rose-400 mt-1 flex items-center gap-1">
+                <AlertCircle className="w-3.5 h-3.5" /> {pushError}
+              </p>
+            )}
+          </div>
+        </div>
+
+        <button
+          onClick={handleTogglePush}
+          disabled={!pushStatus.supported || isPushToggling}
+          className={`px-4 py-2.5 rounded-xl text-xs font-bold transition-all shrink-0 ${
+            pushStatus.isSubscribed
+              ? 'bg-slate-800 hover:bg-rose-500/20 text-rose-400 border border-slate-700'
+              : 'bg-sky-500 hover:bg-sky-400 text-white shadow-lg shadow-sky-500/20'
+          } disabled:opacity-50`}
+        >
+          {isPushToggling
+            ? 'Processing...'
+            : pushStatus.isSubscribed
+            ? 'Disable Push on Device'
+            : 'Enable Push Notifications'}
         </button>
       </div>
 
